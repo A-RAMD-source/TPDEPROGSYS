@@ -27,6 +27,12 @@ int main(int argc, char **argv)
     while(1){
         write(STDOUT_FILENO, P, strlen(P));
         read_count = read(STDIN_FILENO, buffer, MAXLENBUFFER-1);
+//To handle the macro ctrl+d lets recall that its not dependant of the
+//buffer. We just need the value of return of the command and here it will
+//make an exit so an end of file so if the readcount is 0 we exit the loop:
+	if (read_count==0){
+		break;
+		}
         buffer[read_count] = '\0'; 
 //Initially, this block was missing, causing execution failure.
 //We have to replace the ('\n') with the null..
