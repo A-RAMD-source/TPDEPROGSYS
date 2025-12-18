@@ -1,4 +1,5 @@
 #include "enseash.h"
+#include "functions.c"
 
 int main(int argc, char **argv)
 {
@@ -44,8 +45,18 @@ int main(int argc, char **argv)
         }
 // If its the id of son we do the EXEC part of the REPL
         else if (pid == 0){
-            char *argv_exec[] = {buffer, NULL};
-            execvp(buffer, argv_exec);
+            char *argv_exec[MAXLENBUFFER];
+            int argc = 0;
+            //split the buffer into arguments
+            char *argument = strtok(buffer, " ");
+            while (argument != NULL && argc < MAXLENBUFFER - 1) {
+                argv_exec[argc] = argument;
+                argc++;
+                //get the next argument without going over the previous arguments
+                argument = strtok(NULL, " ");
+            }
+            argv_exec[argc] = NULL; // Null-terminate the argument list
+            execvp(argv_exec[0], argv_exec);
             // Failure of the execvp
             perror("Command not found");
             exit(EXIT_FAILURE);
