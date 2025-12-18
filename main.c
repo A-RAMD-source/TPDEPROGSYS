@@ -44,8 +44,17 @@ int main(int argc, char **argv)
         }
 // If its the id of son we do the EXEC part of the REPL
         else if (pid == 0){
-            char *argv_exec[] = {buffer, NULL};
-            execvp(buffer, argv_exec);
+ // For the QUESTION6 we want to handle commands with their arguments. But until now, the buffer only works with a single string meaning that for him a string such as "ls -l" is treated as a command and not as a command with its argument.The idea here is to split the buffer into a table of strings (tokens). Since execvp expects an array where the first element is the command name and the rest are arguments, we use strtok to replace spaces with null terminators. This allows us to point to each individual word. Finally, we must terminate the array with a NULL pointer so that execvp knows when to stop reading arguments.
+             char *exec_args[MAXLENBUFFER]; 
+             int i = 0;
+             char *token = strtok(buffer, " "); 
+             while (token != NULL) {
+            	exec_args[i] = token; // 
+            	i++;
+            	token = strtok(NULL, " "); 
+        }
+        exec_args[i] = NULL; 
+        execvp(exec_args[0],exec_args);
             // Failure of the execvp
             perror("Command not found");
             exit(EXIT_FAILURE);
