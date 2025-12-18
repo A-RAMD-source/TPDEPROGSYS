@@ -17,3 +17,5 @@ We have to create our own exit command whih not only leaves the shell but displa
 We want to modify the prompt to display the termination status.
 The parent shell acquires the encoded exit status of the terminated child process in the 'status'.
 Regarding wheter a process terminated normally or not, we'll use a different macro that will extract the value of the status. If the process terminated normally (via exit or return), we use the WIFEXITED(status) macro to confirm this, and then the WEXITSTATUS(status) macro extracts the integer exit code. If, however, the process was terminated by a signal (like a <Ctrl>+C), we use the WIFSIGNALED(status) macro, followed by the WTERMSIG(status) macro to extract the specific signal number. Eventually we format it how we want it to be through snprintf's.
+
+-----Question 5-----
