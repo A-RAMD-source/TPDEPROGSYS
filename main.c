@@ -70,7 +70,6 @@ int main(int argc, char **argv)
             }
             argv_exec[argc] = NULL; // Null-terminate the argument list
             execvp(argv_exec[0], argv_exec);
->>>>>>> be4c8397a6e34ba0660e4454281b05e767c38089
             // Failure of the execvp
             perror("Command not found");
             exit(EXIT_FAILURE);
