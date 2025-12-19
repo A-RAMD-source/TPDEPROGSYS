@@ -20,6 +20,7 @@
 #define EXIT "exit"
 //We add a maximal status size
 #define MAXSTATUSLEN 128
+#define OCTAL 0644
 
 void display_welcome();
 long calculate_ms(struct timespec startingtime, struct timespec endtime);
