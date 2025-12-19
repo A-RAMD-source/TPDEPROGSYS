@@ -41,16 +41,27 @@ int main(int argc, char **argv)
             char *exec_args[MAXLENBUFFER];
             int i = 0;
             char *token = strtok(buffer, " ");
+            char *output_file = NULL;
             while (token != NULL) {
+            	if (strcmp(token, ">") == 0) {
+            		output_file = strtok(NULL, " ");
+            		break;
+            		}
                 exec_args[i] = token; 
                 i++;
                 token = strtok(NULL, " ");
             }
             exec_args[i] = NULL;
-            
+            if (output_file != NULL) {
+            int fd = open(output_file, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+            if (fd == -1) {
+            	perror("error");
+            	exit(EXIT_FAILURE);
+            	}
+            dup2(fd, STDOUT_FILENO);
+            close(fd);
+            }
             execvp(exec_args[0], exec_args);
-            
-            // Si execvp échoue
             perror("Command not found");
             exit(EXIT_FAILURE);
         }

@@ -7,6 +7,7 @@
 #include <sys/wait.h>
 #include <stdio.h>
 #include <time.h>
+#include <fcntl.h> 
 
 //Magic numbers are forbidden... so are the strings!
 
